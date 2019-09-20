@@ -37,7 +37,7 @@ void affiche(int t[],int n){
     {
         printf("%d\t",t[i]);
     }
-    puts("");
+    puts(" ");
 }
 void tri_fusion(int t[] , int n){
     if (n<=1)
