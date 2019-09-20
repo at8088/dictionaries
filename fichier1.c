@@ -24,7 +24,7 @@ int* fusion(int t1[],int t2[],int size1, int size2){
         i++;
         it1++;
     }
-    while (it2 < size2)
+    while (it2 < size2) //8888
     {
         fus[i]=t2[it2];
         i++;
