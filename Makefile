@@ -5,4 +5,4 @@ test1: bin/test_create_destroy.o bin/fct-primitives.o
 bin/%.o:src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 clean:
-	rm -rf $(BINDIR)/*
+	rm -f bin/*
