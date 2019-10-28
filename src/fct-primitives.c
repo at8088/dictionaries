@@ -4,12 +4,32 @@
 unsigned get_index(char c) { return c - 'a'; }
 char get_char(unsigned index) { return index + 'a'; }
 
-/** construction / destruction */
+/** cette fonction alloue la memoire pour un dico ie un tableau de tree 
+ * et le renvoie. 
+*/
 dico create_dico(){
-
+    dico d = calloc(NB_KEYS , sizeof(tree));
+    if (d == NULL){
+        fprintf(stderr,"Echec d'allocation de memoire");
+    }
+    return d;
 }
-void destroy_dico(dico * d){
 
+
+void destroy_dico(dico * d){
+    if( *d != NULL){
+        dico p = NULL;
+        for (int i = 0; i < NB_KEYS; i++){
+            if((*d)[i] != NULL){
+                p = (*d)[i]->children;
+                free((*d)[i]);
+                (*d)[i]=NULL;
+                destroy_dico(&p);
+            }
+        }
+        free(*d);
+        *d = NULL;
+    }
 }
 
 
@@ -32,5 +52,5 @@ void print_prefix(dico d){
 
 /** egalite structurelle */
 bool equals(dico d1, dico d2){
-    
+
 }
