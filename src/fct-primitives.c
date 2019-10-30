@@ -65,12 +65,28 @@ bool is_empty(dico d){
 
 
 /** mesures */
-unsigned nb_children(tree t){
-
+unsigned int nb_children(tree t){
+  int nb=0;
+  if(t==NULL) return 0;
+  for(int i=0;i<NB_KEYS;i++){
+    if ((t->children)[i]!=NULL) nb++;
+  }
+  return nb;
 }
-unsigned nb_nodes(dico d){
 
+
+unsigned int nb_nodes(dico d){
+  int somme =0;
+  if(d==NULL) return 0;
+  for(int i=0;i<NB_KEYS;i++){
+    if(d[i]!=NULL){
+      somme+= nb_nodes(d[i]->children)+1;
+    }
+  }
+  return somme;
 }
+
+
 unsigned height(dico d){
     if (is_empty(d)){
         return 0;
@@ -115,5 +131,21 @@ void print_prefix(dico d){
 
 /** egalite structurelle */
 bool equals(dico d1, dico d2){
-
+  int i=0;
+  int test_precedant=1;
+  while(i<NB_KEYS&&test_precedant){
+    if (d1[i]!=NULL&&d2[i]!=NULL){
+      if(d1[i]->first==d2[i]->first){
+        int test= equals(d1[i]->children,d2[i]->children) ;
+        test_precedant &= test;
+        i++;
+      }
+    else return 0;
+    }
+    else if(d1[i]==NULL&&d2[i]==NULL){
+      i++;
+    }
+    else return 0;
+  }
+  return test_precedant;
 }
