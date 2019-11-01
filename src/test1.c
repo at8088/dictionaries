@@ -10,12 +10,12 @@ int main(int argc, char const *argv[]){
     d[3]->children[12]->first='i';
     d[3]->children[12]->end_of_word=true;
     d[3]->children[12]->children=create_dico();
-    d[2]=calloc(1,sizeof(struct node));
-    d[2]->first = 'c';
-    d[2]->children = create_dico();
-    d[2]->children[5]=calloc(1,sizeof(struct node));
-    d[2]->children[5]->first='h';
-    d[2]->children[5]->children=create_dico();
+    d[get_index('c')]=calloc(1,sizeof(struct node));
+    d[get_index('c')]->first = 'c';
+    d[get_index('c')]->children = create_dico();
+    d[get_index('c')]->children[get_index('h')]=calloc(1,sizeof(struct node));
+    d[get_index('c')]->children[get_index('h')]->first='h';
+    d[get_index('c')]->children[get_index('h')]->children=create_dico();
     d[16]=calloc(1,sizeof(struct node));
     d[16]->first = 'm';
     d[16]->children = create_dico();
@@ -26,19 +26,23 @@ int main(int argc, char const *argv[]){
     d[16]->children[0]->children[5]=calloc(1,sizeof(struct node));
     d[16]->children[0]->children[5]->first='i';
     d[16]->children[0]->children[5]->end_of_word=true;
-    d[2]->children[5]->children[6]=calloc(1,sizeof(struct node));
-    d[2]->children[5]->children[6]->first='a';
-    d[2]->children[5]->children[6]->children=create_dico();
-    d[2]->children[5]->children[6]->children[20]=calloc(1,sizeof(struct node));
-    d[2]->children[5]->children[6]->children[20]->first='t';
-    d[2]->children[5]->children[6]->children[20]->end_of_word=true;
-    d[2]->children[5]->children[6]->children[20]->children=create_dico();
+    d[get_index('c')]->children[get_index('h')]->children[0]=calloc(1,sizeof(struct node));
+    d[get_index('c')]->children[get_index('h')]->children[0]->first='a';
+    d[get_index('c')]->children[get_index('h')]->children[0]->children=create_dico();
+    d[get_index('c')]->children[get_index('h')]->children[0]->children[get_index('t')]=calloc(1,sizeof(struct node));
+    d[get_index('c')]->children[get_index('h')]->children[0]->children[get_index('t')]->first='t';
+    d[get_index('c')]->children[get_index('h')]->children[0]->children[get_index('t')]->end_of_word=true;
+    d[get_index('c')]->children[get_index('h')]->children[0]->children[get_index('t')]->children=create_dico();
 
 
     unsigned h = height(d);
     printf("h=%u\n",h);
+    char s[10]="chat";
+    bool k = contains_rec(d,"chat",5);
+    printf("k = %d\n",k);
 
-    print_prefix(d);
+
+   // print_prefix(d);
     destroy_dico(&d);
 
     return EXIT_SUCCESS;
