@@ -99,21 +99,21 @@ unsigned height(dico d){
         }
         unsigned h = max(heights);
         free(heights);
-        return h;
+        return h - 1;
     }
 }
 int nbr_decalage = 0;
 
 /** routine d'impression : en prefixe */
 void print_prefix(dico d){
-    if(!is_empty(d)){
-        char *s=calloc(nbr_decalage,sizeof(char));
-        memset(s,'+',nbr_decalage);
-        printf("%s",s);
-        free(s);
+    if(d!=NULL){
         
         for (int i = 0; i < NB_KEYS; i++){
             if(d[i]!=NULL){
+                char *s=calloc(nbr_decalage,sizeof(char));
+                memset(s,'+',nbr_decalage);
+                printf("%s",s);
+                free(s);
                 int mem_nbr_decalage=nbr_decalage;
                 printf("%c",d[i]->first);
                 if(d[i]->end_of_word){
@@ -127,6 +127,7 @@ void print_prefix(dico d){
         }
         
     }
+
 }
 
 /** egalite structurelle */
