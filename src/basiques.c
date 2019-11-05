@@ -1,7 +1,7 @@
 #include "fct-primitives.h"
 
 /*************versions iteratives*********/
-
+extern bool is_empty(dico d);
 
 bool contains_iter(dico d, char * word, unsigned size){
   if(d==NULL) return 0;
@@ -90,4 +90,25 @@ bool add_rec(dico d, char * word, unsigned size){
 }
 bool remove_rec(dico d, char * word, unsigned size){
     
+}
+
+
+unsigned nb_words(dico d){
+  if(d!=NULL){
+    int nbr_mot=0;
+    for(int i = 0 ; i<NB_KEYS ; i++){
+      if(d[i]!=NULL){
+        if(d[i]->end_of_word){
+          nbr_mot+=1;
+        }
+        nbr_mot+=+nb_words(d[i]->children);
+      }  
+    }
+    return nbr_mot;
+  }else{
+    return 0;
+  }
+}
+void print_dico(dico d){
+
 }
