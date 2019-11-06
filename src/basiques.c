@@ -1,5 +1,7 @@
 #include "fct-primitives.h"
 
+
+extern bool is_empty(dico d);
 /*************versions iteratives*********/
 
 
@@ -88,6 +90,26 @@ bool add_rec(dico d, char * word, unsigned size){
     return mot_ajoute;
     
 }
+
+/** faut s'arreter quand size ==0 pas quand *word==0
+ * size doit etre exactement la taille du mot
+*/
 bool remove_rec(dico d, char * word, unsigned size){
+    bool mot_supprime=false;
+    if (d!=NULL && size>0 && d[get_index(*word)] != NULL){
+        if (nb_nodes(d[get_index(*word)]->children) + 1== size ){
+            dico p = d[get_index(*word)]->children;
+            free(d[get_index(*word)]);
+            d[get_index(*word)]=NULL;
+            remove_rec(p,word+1,size-1);
+            mot_supprime = true;
+        }else{
+            remove_rec(d[get_index(*word)]->children,word+1,size-1);
+        }
+       // d[get_index(*word)]->end_of_word =  ? false:true;
+    }
+
+
+    return mot_supprime;
     
 }
