@@ -41,8 +41,7 @@ int main(int argc, char const *argv[]){
     d[get_index('c')]->children[get_index('h')]->children[0]->children[get_index('t')]->children=create_dico();
 
  */
-    unsigned h = height(d);
-    printf("h=%u\n",h);
+    
     char s[10]="chien";
     add_rec(d,s,10);
     add_rec(d,"chat",7);
@@ -50,7 +49,10 @@ int main(int argc, char const *argv[]){
     add_rec(d,"hi",10);
     add_rec(d,"mart",10);
     add_rec(d,"martin",15);
+    // remove_iter(d,"mart",6);
     print_prefix(d);
+    unsigned h = nb_words(d);
+    printf("\nh=%u\n",h);
     destroy_dico(&d);
 
     return EXIT_SUCCESS;

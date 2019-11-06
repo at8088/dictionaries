@@ -48,6 +48,9 @@ bool contains_rec(dico d, char * word, unsigned size);
 bool add_rec(dico d, char * word, unsigned size);
 bool remove_rec(dico d, char * word, unsigned size);
 
+unsigned nb_words(dico d);
+void print_dico(dico d);
+
 #endif
 
 

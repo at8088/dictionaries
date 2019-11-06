@@ -1,6 +1,8 @@
 #include "fct-primitives.h"
 
 
+
+
 unsigned get_index(char c) { return c - 'a'; }
 char get_char(unsigned index) { return index + 'a'; }
 
@@ -107,22 +109,21 @@ int nbr_decalage = 0;
 /** routine d'impression : en prefixe */
 void print_prefix(dico d){
     if(d!=NULL){
-        
+        int mem_nbr_decalage;
         for (int i = 0; i < NB_KEYS; i++){
             if(d[i]!=NULL){
                 char *s=calloc(nbr_decalage,sizeof(char));
                 memset(s,'+',nbr_decalage);
                 printf("%s",s);
                 free(s);
-                int mem_nbr_decalage=nbr_decalage;
+                mem_nbr_decalage=nbr_decalage;
                 printf("%c",d[i]->first);
-                if(d[i]->end_of_word){
-                    printf("*");
-                }
+                if(d[i]->end_of_word) printf("*");
                 puts("");
                 nbr_decalage++;
                 print_prefix(d[i]->children);
                 nbr_decalage=mem_nbr_decalage;
+                mem_nbr_decalage=0;
             }
         }
         
