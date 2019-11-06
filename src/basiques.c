@@ -7,6 +7,7 @@ extern bool is_empty(dico d);
 
 bool contains_iter(dico d, char * word, unsigned size){
   if(d==NULL) return 0;
+  if(strlen(word)!=size) return 0;
   dico p =d;
   bool test=1;
   for(int i=0;i<size;i++){
@@ -25,6 +26,7 @@ bool contains_iter(dico d, char * word, unsigned size){
 }
 
 bool add_iter(dico d, char * word, unsigned size){
+  if(strlen(word)!=size) return 0;
   if(!contains_iter(d,word,size)){
     if(d==NULL) d=create_dico();
     dico p=d;
@@ -45,13 +47,16 @@ bool add_iter(dico d, char * word, unsigned size){
 
 bool remove_iter(dico d, char * word, unsigned size){
   if(d==NULL) return 0;
+  if(strlen(word)!=size) return 0;
   if(!contains_iter(d,word,size)) return 0;
   else {
     dico p=d;
     for(int i=0;i<size;i++){
       int indice=get_index(word[i]);
       dico temp=p[indice]->children;
-      p[indice]=NULL;
+      if(nb_nodes(temp)==size-(i+1)){
+        p[indice]=NULL;
+      }
       p=temp;
     }
   }
