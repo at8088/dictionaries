@@ -110,5 +110,7 @@ unsigned nb_words(dico d){
   }
 }
 void print_dico(dico d){
-
+  if (d!=NULL){
+    
+  }
 }

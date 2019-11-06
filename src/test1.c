@@ -49,6 +49,7 @@ int main(int argc, char const *argv[]){
     add_rec(d,"hi",10);
     add_rec(d,"mart",10);
     add_rec(d,"martin",15);
+    // remove_iter(d,"mart",6);
     print_prefix(d);
     unsigned h = nb_words(d);
     printf("\nh=%u\n",h);
