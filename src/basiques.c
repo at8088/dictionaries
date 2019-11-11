@@ -63,7 +63,7 @@ bool remove_iter(dico d, char * word, unsigned size){
 
 bool contains_rec(dico d, char * word, unsigned size){
     if (d!=NULL){
-        if (size == 0 || *word == 0){
+        if (size == 0 ){
             return true;
         }
         else if(d[get_index(*word)] != NULL  && d[get_index(*word)]->first==*word ){
@@ -91,26 +91,24 @@ bool add_rec(dico d, char * word, unsigned size){
     
 }
 
-/** faut s'arreter quand size ==0 pas quand *word==0
- * size doit etre exactement la taille du mot
-*/
+
 bool remove_rec(dico d, char * word, unsigned size){
-    bool mot_supprime=false;
-    if (d!=NULL && size>0 && d[get_index(*word)] != NULL){
-        if (nb_nodes(d[get_index(*word)]->children) + 1== size ){
-            dico p = d[get_index(*word)]->children;
-            free(d[get_index(*word)]);
-            d[get_index(*word)]=NULL;
-            remove_rec(p,word+1,size-1);
-            mot_supprime = true;
-        }else{
-            remove_rec(d[get_index(*word)]->children,word+1,size-1);
-        }
-       // d[get_index(*word)]->end_of_word =  ? false:true;
+  bool mot_supprime=false;
+  if (d!=NULL  && size >0 ){
+    if(d[get_index(*word)]!= NULL){
+      if ((nb_words(d[get_index(*word)]->children) +(int) d[get_index(*word)]->end_of_word )== 1 ){
+          dico p = d[get_index(*word)]->children;
+          free(d[get_index(*word)]);
+          d[get_index(*word)]=NULL;
+          remove_rec(p,word+1,size-1);
+          mot_supprime = true;
+      }else{
+          if (d[get_index(word[size-1])]!=NULL) d[get_index(word[size-1])]->end_of_word=false;
+          remove_rec(d[get_index(*word)]->children,word+1,size-1);
+      }
     }
-
-
-    return mot_supprime;
+  }
+  return mot_supprime;
     
 }
 
