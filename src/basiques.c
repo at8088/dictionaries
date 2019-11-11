@@ -98,6 +98,11 @@ bool add_rec(dico d, char * word, unsigned size){
 
 
 bool remove_rec(dico d, char * word, unsigned size){
+  if (strlen(word) != size)
+  {
+    return false;
+  }
+  
   bool mot_supprime=false;
   if (d!=NULL  && size >0 ){
     if(d[get_index(*word)]!= NULL){
@@ -106,6 +111,7 @@ bool remove_rec(dico d, char * word, unsigned size){
           free(d[get_index(*word)]);
           d[get_index(*word)]=NULL;
           remove_rec(p,word+1,size-1);
+          destroy_dico(&p);
           mot_supprime = true;
       }else{
           if (d[get_index(word[size-1])]!=NULL) d[get_index(word[size-1])]->end_of_word=false;

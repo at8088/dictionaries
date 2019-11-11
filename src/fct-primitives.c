@@ -112,9 +112,10 @@ void print_prefix(dico d){
         int mem_nbr_decalage;
         for (int i = 0; i < NB_KEYS; i++){
             if(d[i]!=NULL){
-                char *s=calloc(nbr_decalage,sizeof(char));
+                char *s=calloc(nbr_decalage + 1,sizeof(char));
                 memset(s,'+',nbr_decalage);
-                printf("%s",s);
+                s[nbr_decalage]=0;   // fprintf l'oblige (valgrind)
+                fprintf(stdout,"%s",s);
                 free(s);
                 mem_nbr_decalage=nbr_decalage;
                 printf("%c",d[i]->first);
