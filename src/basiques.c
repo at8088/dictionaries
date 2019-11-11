@@ -18,6 +18,8 @@ bool contains_iter(dico d, char * word, unsigned size){
     else if(p[indice]->first!=word[i]) {
        return 0;
     }
+    else if(i==size-1 && p[indice]->end_of_word == 0) return 0;
+
     else {
       p=p[indice]->children ;
     }
@@ -32,10 +34,15 @@ bool add_iter(dico d, char * word, unsigned size){
     dico p=d;
     for(int i=0;i<size;i++){
       int indice=get_index(word[i]);
-      if(p[indice]!=NULL) p=p[indice]->children;
+      if(p[indice]!=NULL) {
+        if (i==size-1)  p[indice]->end_of_word =1;
+        else p=p[indice]->children;
+      }
       else {
         p[indice]=calloc(1,sizeof(struct node));
         p[indice]->first = word[i];
+        p[indice]->end_of_word =0;
+        if (i==size-1)  p[indice]->end_of_word =1;
         p[indice]->children = create_dico();
         p=p[indice]->children;
       }
@@ -54,9 +61,11 @@ bool remove_iter(dico d, char * word, unsigned size){
     for(int i=0;i<size;i++){
       int indice=get_index(word[i]);
       dico temp=p[indice]->children;
-      if(nb_nodes(temp)==size-(i+1)){
+      if((nb_words(temp)+(p[indice]->end_of_word==1))==1)
+      {
         p[indice]=NULL;
       }
+      if(i==size-1&&p[indice]) p[indice]->end_of_word=0;
       p=temp;
     }
   }
