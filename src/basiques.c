@@ -1,5 +1,5 @@
 #include "fct-primitives.h"
-
+#define TAILLE_MAX_MOT 30
 
 extern bool is_empty(dico d);
 /*************versions iteratives*********/
@@ -149,8 +149,24 @@ unsigned nb_words(dico d){
     return 0;
   }
 }
+char  str[TAILLE_MAX_MOT]; 
+int indice = 0;
 void print_dico(dico d){
-  if (d!=NULL){
-    
+  if (!is_empty(d)){
+    for(int i=0; i<NB_KEYS ; i++){
+      if (d[i]!=NULL){
+        for(int j=indice; j<TAILLE_MAX_MOT; j++){
+            str[j]=0;
+        }
+        str[indice]=d[i]->first;
+        indice++;
+        if (d[i]->end_of_word){
+          printf("%s,",str);
+         
+        }
+        print_dico(d[i]->children);
+        indice--;
+      }
+    }
   }
 }
