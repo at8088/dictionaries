@@ -16,6 +16,9 @@ int main(void){
     add_iter(d,"xylophone",9);
    
     print_dico(d);
+    puts("************");
+    print_dico(d);
+
     puts("");
 
     destroy_dico(&d);
