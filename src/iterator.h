@@ -1,4 +1,5 @@
 #include "fct-primitives.h"
+#define NB_KEYS 26
 
 struct iterator_info {
     tree t;
