@@ -63,9 +63,11 @@ bool remove_iter(dico d, char * word, unsigned size){
       dico temp=p[indice]->children;
       if((nb_words(temp)+(p[indice]->end_of_word==1))==1)
       {
+        free(p[indice]);
         p[indice]=NULL;
       }
       if(i==size-1&&p[indice]) p[indice]->end_of_word=0;
+      // free(temp);
       p=temp;
     }
   }
@@ -149,8 +151,12 @@ unsigned nb_words(dico d){
     return 0;
   }
 }
+
+
 char  str[TAILLE_MAX_MOT]; 
 int indice = 0;
+
+
 void print_dico(dico d){
   if (!is_empty(d)){
     for(int i=0; i<NB_KEYS ; i++){

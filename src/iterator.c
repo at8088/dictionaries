@@ -23,4 +23,20 @@ iterator * start_iterator(dico d){
     return it ;
   }
 
+
+void destroy_iterator(iterator ** it){
+    if (*it != NULL){
+        if (*it->stack ){
+            free(*it->stack);
+            *it->stack == NULL;
+        }
+        free(*it->word);
+        *it->word = NULL;
+        free(*it);
+        *it=NULL;
+    }
+}
+
+bool has_next(iterator *it){
+    return it->index_stack >= 0 ;
 }
