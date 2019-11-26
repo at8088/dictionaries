@@ -59,6 +59,7 @@ bool remove_iter(dico d, char * word, unsigned size){
   else {
     dico p=d;
     for(int i=0;i<size;i++){
+
       int indice=get_index(word[i]);
       dico temp=p[indice]->children;
       if((nb_words(temp)+(p[indice]->end_of_word==1))==1)
@@ -67,9 +68,9 @@ bool remove_iter(dico d, char * word, unsigned size){
         p[indice]=NULL;
       }
       if(i==size-1&&p[indice]) p[indice]->end_of_word=0;
-      // free(temp);
       p=temp;
     }
+    
   }
   return 1;
 }
@@ -85,6 +86,8 @@ bool contains_rec(dico d, char * word, unsigned size){
         else if(d[get_index(*word)] != NULL  && d[get_index(*word)]->first==*word ){
             return contains_rec(d[get_index(*word)]->children,word+1,size-1);
         }else return false;
+    }else{
+      return false;
     }
 }
 bool add_rec(dico d, char * word, unsigned size){
@@ -168,7 +171,6 @@ void print_dico(dico d){
         indice++;
         if (d[i]->end_of_word){
           printf("%s,",str);
-         
         }
         print_dico(d[i]->children);
         indice--;

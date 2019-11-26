@@ -14,11 +14,14 @@ int main(void){
     add_iter(d,"arbre",5);
     add_iter(d,"mardi",5);
     add_iter(d,"xylophone",9);
-   
+    
+    puts("Affichage avec print dico");
+    puts("");
     print_dico(d);
-    puts("************");
-    print_dico(d);
-
+    puts("\n");
+    puts("Affichage avec print prefix");
+    puts("");
+    print_prefix(d);
     puts("");
 
     destroy_dico(&d);

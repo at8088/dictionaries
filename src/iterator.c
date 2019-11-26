@@ -10,7 +10,7 @@ iterator * start_iterator(dico d){
     unsigned int nbnodes = nb_nodes(d);
     unsigned int h = height(d);
     iterator* it = malloc(sizeof(iterator));
-    it->word = calloc(h,sizeof(char));
+    it->word = (char*)calloc(h,sizeof(char));
     it->stack = malloc(nbnodes*sizeof(*it->stack));
     it->index_stack = -1;
     for(int i=0;i<NB_KEYS;i++){
@@ -45,60 +45,42 @@ bool has_next(iterator *it){
     }
 }
 
-char * next (iterator * it){
+void empiler_fils(iterator * it ,int estampille,dico fils){
+  for(int i=NB_KEYS-1; i>=0 ; i--){
+    if (fils[i]){
+      it->index_stack++;
+      it->stack[it->index_stack].t=(tree) fils[i];
+      it->stack[it->index_stack].index_word = estampille+1;
+    }
+  }
+}
 
+char * next (iterator * it){
   int index_stack_init ; 
   dico fils_de_racine;
-  index_stack_init = it->index_stack;
-  int estampille = it->stack[index_stack_init].index_word;
-  if ( it->stack[index_stack_init].t->end_of_word && !is_empty(it->stack[it->index_stack].t->children))
-  {
-    it->index_stack--;
-    for (int i = it->stack[it->index_stack].index_word; i < 10; i++){
-      it->word[i]=0;
-    }
-    return "";
-  }
-  index_stack_init = it->index_stack;
-  
-  while (  !is_empty(it->stack[it->index_stack].t->children)){
+  int estampille ;
+  // on sort si le dico fils ou si on rencontre une fin de mot
+  while (!is_empty(it->stack[it->index_stack].t->children)){
     index_stack_init = it->index_stack;
-    it->index_stack --;
+    it->index_stack --;           // depilement
     estampille = it->stack[index_stack_init].index_word;
-    it->word[estampille] = it->stack[index_stack_init].t->first;
+    it->word[estampille] = it->stack[index_stack_init].t->first;  // maj mot
     fils_de_racine = it->stack[index_stack_init].t->children;
-    for(int i=NB_KEYS-1; i>=0 ; i--){
-      if (fils_de_racine[i]){
-        it->index_stack++;
-        it->stack[it->index_stack].t=(tree) fils_de_racine[i];
-        it->stack[it->index_stack].index_word = estampille+1;
-      }
-    }
+    empiler_fils(it,estampille,fils_de_racine);     //empilement des fils
     if (it->stack[it->index_stack].t->end_of_word){
       break;
     }
-    
   }  
-  if (it->index_stack != -1 ) 
-  {
-    for (int i = it->stack[it->index_stack].index_word; i < 10; i++){
-      it->word[i]=0;
-    }
+  // depilement du caractere de fin de mot et empilement de ses fils
+  if (it->index_stack != -1 ){ 
+    // reinitialiser les cases du mot dont l'indice est plus grd que l'estampille.
+    for (int i = it->stack[it->index_stack].index_word; i < sizeof(it->word); i++) it->word[i]=0;
     index_stack_init = it->index_stack;
     it->index_stack --;
     estampille = it->stack[index_stack_init].index_word;
     it->word[estampille] = it->stack[index_stack_init].t->first;
     fils_de_racine = it->stack[index_stack_init].t->children;
-    for(int i=NB_KEYS-1; i>=0 ; i--){
-      if (fils_de_racine[i]){
-        it->index_stack++;
-        it->stack[it->index_stack].t=(tree) fils_de_racine[i];
-        it->stack[it->index_stack].index_word = estampille+1;
-      }
-    }
-    
+    empiler_fils(it,estampille,fils_de_racine);
   }
   return  it->word;  
-
-
 }

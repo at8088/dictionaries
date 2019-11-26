@@ -38,6 +38,7 @@ void print_prefix(dico d);
 /** egalite structurelle */
 bool equals(dico d1, dico d2);
 
+bool is_empty(dico d);
 
 bool contains_iter(dico d, char * word, unsigned size);
 /* size est la taille du mot word */

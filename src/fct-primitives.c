@@ -101,7 +101,7 @@ unsigned height(dico d){
         }
         unsigned h = max(heights);
         free(heights);
-        return h - 1;
+        return h ;
     }
 }
 int nbr_decalage = 0;
