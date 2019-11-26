@@ -39,7 +39,7 @@ void destroy_iterator(iterator ** it){
 
 bool has_next(iterator *it){
     if (it){
-      return it->index_stack != -1 ;
+      return it->index_stack > -1 ;
     }else{
       return false;
     }
@@ -48,19 +48,25 @@ bool has_next(iterator *it){
 char * next (iterator * it){
 
   int index_stack_init ; 
-  int estampille;
-
-  while (true){
-
-
-
+  dico fils_de_racine;
+  index_stack_init = it->index_stack;
+  int estampille = it->stack[index_stack_init].index_word;
+  if ( it->stack[index_stack_init].t->end_of_word && !is_empty(it->stack[it->index_stack].t->children))
+  {
+    it->index_stack--;
+    for (int i = it->stack[it->index_stack].index_word; i < 10; i++){
+      it->word[i]=0;
+    }
+    return "";
+  }
+  index_stack_init = it->index_stack;
+  
+  while (  !is_empty(it->stack[it->index_stack].t->children)){
     index_stack_init = it->index_stack;
     it->index_stack --;
     estampille = it->stack[index_stack_init].index_word;
     it->word[estampille] = it->stack[index_stack_init].t->first;
-    dico fils_de_racine = it->stack[index_stack_init].t->children;
-
-  
+    fils_de_racine = it->stack[index_stack_init].t->children;
     for(int i=NB_KEYS-1; i>=0 ; i--){
       if (fils_de_racine[i]){
         it->index_stack++;
@@ -68,19 +74,29 @@ char * next (iterator * it){
         it->stack[it->index_stack].index_word = estampille+1;
       }
     }
-
-    for (int i = estampille + 1; i < strlen(it->word); i++){
-      it->word[i]=0;
-    }
-
-    if (it->stack[index_stack_init].t->end_of_word){
-      printf("index = %d\n",it->index_stack);
+    if (it->stack[it->index_stack].t->end_of_word){
       break;
     }
-  } 
-  if (it->index_stack != -1 && it->stack[it->index_stack].t->end_of_word) 
+    
+  }  
+  if (it->index_stack != -1 ) 
   {
-    it->word[it->stack[it->index_stack].index_word] = it->stack[it->index_stack].t->first ;
+    for (int i = it->stack[it->index_stack].index_word; i < 10; i++){
+      it->word[i]=0;
+    }
+    index_stack_init = it->index_stack;
+    it->index_stack --;
+    estampille = it->stack[index_stack_init].index_word;
+    it->word[estampille] = it->stack[index_stack_init].t->first;
+    fils_de_racine = it->stack[index_stack_init].t->children;
+    for(int i=NB_KEYS-1; i>=0 ; i--){
+      if (fils_de_racine[i]){
+        it->index_stack++;
+        it->stack[it->index_stack].t=(tree) fils_de_racine[i];
+        it->stack[it->index_stack].index_word = estampille+1;
+      }
+    }
+    
   }
   return  it->word;  
 
